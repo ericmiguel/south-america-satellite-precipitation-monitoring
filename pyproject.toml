@@ -1,0 +1,193 @@
+[project]
+name = "satmon"
+version = "0.1.0"
+description = "Monitoramento de sistemas ciclônicos com GOES-19 via CPTEC/INPE"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28",
+    "loguru>=0.7",
+    "pillow>=12.2.0",
+]
+
+[project.scripts]
+satmon = "satmon.__main__:main"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv]
+package = true
+
+
+[tool.ruff]
+# Enable preview features (e.g., docstring code formatting)
+preview = true
+
+# Enable automatic fixes by default when running ruff
+# Can be overridden with --fix or --no-fix command-line flags
+# Only applies safe fixes unless --unsafe-fixes is provided
+fix = true
+include = ["pyproject.toml", "src/**/*.py", "scripts/**/*.py", "*.py"]
+extend-include = ["*.ipynb"]
+
+respect-gitignore = true
+show-fixes = true
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "legacy/**",
+    "src/mv1/**",
+]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Target Python version for Ruff compatibility
+target-version = "py312"
+
+[tool.ruff.lint]
+# Allow removing unused imports in __init__ files
+extend-safe-fixes = ["F401"]
+
+# Enable comprehensive linting rules:
+# - Pyflakes (F): Basic Python errors
+# - pycodestyle (E, W): PEP 8 style violations  
+# - McCabe complexity (C901): Cyclomatic complexity
+# - flake8-bugbear (B): Common bug patterns
+# - pydocstyle (D): Docstring conventions
+# - isort (I001): Import sorting
+# - pyupgrade (UP): Dependency updates
+# - pydoclint (DOC): Docstring content issues
+# - refurber (FURB): Code quality improvements
+# - pylint (PL, PLE): Additional code quality checks
+# - pylint refactor (PLR) : Refactoring suggestions
+# - pygrep-hooks (PGH): Custom regex checks
+# - tryceratops (TRY): exception Handling AntiPatterns in Python
+# - ruff (RUF): Ruff-specific checks
+# - pep8-naming (N): Naming conventions
+# - perflint (PERF): Performance issues
+select = [
+    "F",
+    "E",
+    "W",
+    "C901",
+    "B",
+    "D",
+    "E",
+    "I001",
+    "UP",
+    "DOC",
+    "FURB",
+    "PL",
+    "PLE",
+    "PLR",
+    "PGH",
+    "RUF",
+    "N",
+    "PERF",
+]
+
+# Allow automatic fixing for all enabled rules when --fix is provided
+fixable = ["ALL"]
+
+# Do not automatically fix these rule categories (currently none)
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+# Enable auto-formatting of code examples in docstrings
+# Supports Markdown, reStructuredText code blocks, and doctests
+docstring-code-format = true
+
+# Use dynamic line length for code snippets in docstrings
+# Adapts to the surrounding docstring indentation
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint.pydoclint]
+# Skip docstrings which fit on a single line.
+ignore-one-line-docstrings = true
+
+[tool.ruff.lint.flake8-bugbear]
+# Allow default arguments for FastAPI dependency injection patterns
+# Note: These are included for future compatibility but not currently used in TreeMancer
+extend-immutable-calls = []
+
+[tool.ruff.lint.pydocstyle]
+# Use NumPy docstring convention (supports: "google", "numpy", or "pep257")
+convention = "numpy"
+
+[tool.ruff.lint.flake8-bandit]
+check-typed-exception = true
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "single"
+
+[tool.ruff.lint.isort]
+# Force each from-import to appear on its own line
+force-single-line = true
+
+# Sort imports by module name regardless of import style
+# (don't separate 'import sys' from 'from itertools import groupby')
+force-sort-within-sections = true
+
+# Add a single blank line after each import block
+lines-after-imports = 2
+
+# No blank lines between direct imports and from-imports
+lines-between-types = 0
+
+[tool.pyrefly]
+python-version = "3.12"
+strict = true
+
+[dependency-groups]
+dev = [
+    "pyrefly>=1.1.1",
+    "ruff>=0.15.20",
+]
